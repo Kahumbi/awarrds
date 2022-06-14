@@ -13,7 +13,7 @@ from django.views.generic import CreateView, UpdateView, DetailView
 
 def home(request):
     response = ''
-    url = 'http://127.0.0.1:8000/postList/'
+    url = 'https://kusakahiiapi.herokuapp.com/postList/'
     res = requests.get(url)
     if (res.status_code == 200):
         response = res.json()
