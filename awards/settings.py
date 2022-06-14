@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 import os
+import django_heroku
 from pathlib import Path
 import cloudinary
 import cloudinary.uploader
@@ -127,6 +128,8 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 # Default primary key field type
@@ -144,3 +147,5 @@ cloudinary.config(
   api_secret = "6D6Z1OZac5TuXgbMs7DXopDmB8U",
   secure = True
 )
+
+django_heroku.settings(locals())
