@@ -6,6 +6,8 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .serializers import PostSerializer
 import requests
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.views.generic import CreateView, UpdateView, DetailView
 
 # Create your views here.
 
@@ -72,3 +74,28 @@ def postDelete(request, pk):
     post = Post.objects.get(id=pk)
     post.delete()
     return Response('Posts deleted!')
+
+class PostCreateView(LoginRequiredMixin,CreateView):
+    model= Post
+    fields = ['title', 'content', 'image', 'link']
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+    
+class PostDetailView(DetailView):
+    model = Post 
+    
+class PostUpdateView(LoginRequiredMixin, UpdateView):
+    model = Post
+    fields = ['title', 'content']
+    
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+    
+    def test_func(self):
+        post = self.get_object()
+        if self.request.user == post.author:
+            return True
+        return False
