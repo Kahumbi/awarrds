@@ -14,6 +14,7 @@ urlpatterns = [
     path('portfolio/create/', PostCreateView.as_view(), name='portfolio-create'),
     path('post/<int:pk>/', PostDetailView.as_view(), name='portfolio-detail'),
     path('post/update/<int:pk>/', PostUpdateView.as_view(), name='portfolio-update'),
+    path('searchPost/', views.search_post, name='search'),
 
 
 ]   

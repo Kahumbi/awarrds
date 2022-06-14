@@ -2,6 +2,7 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
 from django.urls import reverse
+from cloudinary.models import CloudinaryField
 
 
 
@@ -12,11 +13,12 @@ class Post(models.Model):
     content = models.TextField()
     date_posted = models.DateTimeField(default=timezone.now)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
-    image = models.ImageField(default='default.jpg',null=False, blank=False)
+    # image = models.ImageField(default='default.jpg',null=False, blank=False)
+    image = CloudinaryField('image')
     link = models.CharField(default='',max_length=250)
     
     def __str__(self):
         return self.title
 
     def get_absolute_url(self):
-        return reverse('post-detail', kwargs={'pk':self.pk})
+        return reverse('portfolio-detail', kwargs={'pk':self.pk})

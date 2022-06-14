@@ -1,0 +1,20 @@
+{% extends "portfolio/base.html" %}
+{% block content %}
+<div class="">
+    <h2 class="border-bottom">projects searched</h2>
+    {% for post in posts%}
+    <div class="col">
+        <div class="text-dark card mb-3">
+            <a href="{% url 'portfolio-detail' post.id %}">
+                <img class=" image-fluid card-img-top" src="{{post.image.url}}" alt="{{post.title}}">
+            </a>
+            <div class="card-body">
+            <h5 class="card-title">{{post.title}}</h5>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+        <h3>Check Projects here</h3>
+{% endfor %}
+</div>
+{% endblock content %}

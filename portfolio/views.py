@@ -44,7 +44,10 @@ def postList(request):
 
 @api_view(['GET'])
 def postList(request):
-    posts = Post.objects.all()
+        # get all the posts
+        # serialize all posts
+        # return json
+    posts = Post.objects.all().order_by('-id')
     serializer = PostSerializer(posts, many=True)
     return Response(serializer.data)
 
@@ -99,3 +102,16 @@ class PostUpdateView(LoginRequiredMixin, UpdateView):
         if self.request.user == post.author:
             return True
         return False
+    
+def search_post(request):
+    posts = ''
+    query = request.GET.get('query')
+    if query != None:
+        posts = Post.objects.filter(title__contains=query)
+
+    context = {
+    'posts': posts,
+    'title':'search posts'
+}
+
+    return render(request, 'portfolio/search.html', context)
